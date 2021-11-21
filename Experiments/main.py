@@ -19,11 +19,11 @@ from utils.utils import cyclical_lr, train_teacher_network, test_eyegaze_network
 
 plt.rcParams['figure.figsize'] = [10, 10]
 
+
 logging.basicConfig(stream=sys.stdout, format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s', datefmt='%H:%M:%S', level=logging.DEBUG)
 logger = logging.getLogger('eyegaze')
 logging.getLogger('matplotlib.font_manager').disabled = True
 pil_logger = logging.getLogger('PIL').setLevel(logging.INFO)
-
 
 def make_parser():
     parser = argparse.ArgumentParser(description='PyTorch RNN Classifier w/ attention')
@@ -153,7 +153,7 @@ if __name__ == '__main__':
     # Create saving dir, all useful variables
     comment_variable = ''
     timestamp = str(datetime.now()).replace(" ", "").split('.')[0]
-    for arg in vars(args):
+    for arg in vars(args): 
         if arg not in ['data_path', 'heatmaps_path', 'image_path', 'class_names', 'gpus', 'viz', 'device', 'alpha', 'omega',
                         'lambda1', 'test', 'testdir', 'output_dir', 'model_teacher', 'num_workers', 'rseed', 'pretrained']:
             comment_variable += f'{arg}{str(getattr(args, arg)).replace(" ", "")}_' \
@@ -161,6 +161,8 @@ if __name__ == '__main__':
     comment_variable += f'{timestamp}'
     output_model_path = os.path.join(args.output_dir, comment_variable)
     logger.info("[Arguments]: %r", args)
+
+    ### Load data from here.
     train_dl, valid_dl, test_dl = load_data(args.model_type, args.data_path, args.image_path, args.heatmaps_path,
                                             args.resize, args.class_names, args.batch_size, args.num_workers, args.rseed)
     if not args.test: #training
